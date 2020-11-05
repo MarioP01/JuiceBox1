@@ -5,18 +5,9 @@ require("dotenv").config();
 // like, seriously. go delete that!
 
 // inside index.js
-const PORT = 3000;
+const { PORT = 3000 } = process.env;
 const express = require("express");
 const server = express();
-
-// index.js
-
-const { client } = require("./db");
-client.connect();
-
-server.listen(PORT, () => {
-  // old stuff
-});
 
 const bodyParser = require("body-parser");
 server.use(bodyParser.json());
@@ -37,8 +28,13 @@ server.use((req, res, next) => {
 const apiRouter = require("./api");
 server.use("/api", apiRouter);
 
+// index.js
+
+const { client } = require("./db");
+client.connect();
+
 // stuff below here
 
-server.listen(PORT, () => {
+server.listen(PORT, "localhost", () => {
   console.log("The server is up on port", PORT);
 });
