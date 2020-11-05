@@ -31,10 +31,19 @@ server.use("/api", apiRouter);
 // index.js
 
 const { client } = require("./db");
-client.connect();
 
-// stuff below here
+// // stuff below here
 
-server.listen(PORT, "localhost", () => {
-  console.log("The server is up on port", PORT);
+// server.listen(PORT, "localhost", () => {
+//   console.log("The server is up on port", PORT);
+// });
+
+server.listen(PORT, async () => {
+  console.log(`Server is running on ${PORT}!`);
+  try {
+    await client.connect();
+    console.log("Database is open for business!");
+  } catch (error) {
+    console.error("Database is closed for repairs!\n", error);
+  }
 });
